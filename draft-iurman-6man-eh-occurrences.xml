@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE rfc [
 <!ENTITY RFC2119 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
+<!ENTITY RFC4443 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4443.xml">
 <!ENTITY RFC8174 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml">
 <!ENTITY RFC8200 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8200.xml">
-<!ENTITY I-D.ietf-6man-eh-limits SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-6man-eh-limits.xml">
-<!ENTITY I-D.ietf-6man-rfc8504-bis SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-6man-rfc8504-bis.xml">
+<!ENTITY RFC8883 SYSTEM "http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8883.xml">
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 <?rfc strict="yes" ?>
@@ -14,12 +14,11 @@
 <?rfc sortrefs="yes" ?>
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
-<rfc category="std" docName="draft-iurman-6man-eh-occurrences-00" updates="8200"
+<rfc category="std" docName="draft-iurman-6man-eh-occurrences-01"
      ipr="trust200902" submissionType="IETF" consensus="true">
   <front>
-    <title abbrev="DoS Mitigation: IPv6 Extension Headers">Mitigating DoS
-    attacks in IPv6 by clarifying the number of occurrences of Extension
-    Headers</title>
+    <title abbrev="IPv6 EH Enforcement for Destinations">Enforcement of IPv6
+    Extension Headers Ordering and Occurrence at Destination Nodes</title>
 
     <author fullname="Justin Iurman" initials="J." surname="Iurman">
       <organization abbrev="">University of Liege</organization>
@@ -34,43 +33,55 @@
       </address>
     </author>
 
-    <date day="23" month="December" year="2025"/>
+    <author fullname="Tom Herbert" initials="T." surname="Herbert">
+      <organization abbrev="">XDPnet</organization>
+      <address>
+        <postal>
+          <city>Los Gatos, CA,</city>
+          <country>United States of America</country>
+        </postal>
+        <email>tom@herbertland.com</email>
+      </address>
+    </author>
+
+    <date day="28" month="February" year="2026"/>
 
     <abstract>
-      <t>This document updates RFC 8200 by specifying normative requirements on
-      the number of occurrences of IPv6 Extension Headers. Operational
-      experience has demonstrated that permitting multiple occurrences of the
-      same Extension Header can create parsing ambiguity, increase attack
-      surface, and complicate packet processing in general. This is especially
-      true for both the Hop-by-Hop Options Header and the Destination Options
-      Header, which can contain a number of options. This document restricts
-      IPv6 packets to carry at most one instance of each Extension Header, with
-      the exception of the Destination Options Header, which is permitted to
-      appear twice as specified in RFC 8200.</t>
+      <t>Operational experience has demonstrated that permitting multiple
+      occurrences of the same IPv6 Extension Header can create parsing
+      ambiguity, complicate packet processing, and increase potential security
+      risks. Although RFC 8200 recommends that senders follow a specific order
+      of appearance and limit the occurrences of Extension Headers, receivers
+      cannot assume that these recommendations have been followed. This document
+      specifies behavior that allows an IPv6 destination node, namely a host
+      (i.e., the final destination of an IPv6 packet) or an intermediate
+      destination node addressed by an entry in a Routing header list other than
+      the final one, to enforce strict ordering and limits on the occurrence of
+      Extension Headers.</t>
     </abstract>
   </front>
 
   <middle>
     <section title="Introduction" toc="default">
-      <t>Section 4.1 of <xref target="RFC8200"/> recommends, but does not
-      normatively require, that each Extension Header appear at most once, with
-      the exception of the Destination Options Header, which may appear at most
-      twice, once before a Routing header and once before the upper-layer
-      header.</t>
-
       <t>Operational experience has demonstrated that permitting multiple
-      occurrences of the same Extension Header can create parsing ambiguity,
-      increase attack surface, and complicate packet processing in general. This
-      is especially true for both the Hop-by-Hop Options Header and the
-      Destination Options Header, which can contain a number of options.</t>
+      occurrences of the same IPv6 Extension Header can create parsing
+      ambiguity, complicate packet processing, and increase potential security
+      risks. This is particularly true for the Hop-by-Hop Options header and the
+      Destination Options header, which may each carry multiple options.</t>
 
-      <t>This document updates <xref target="RFC8200"/>, in particular Section
-      4.1, to enforce normative limits on the number of occurrences of Extension
-      Headers and to remove any ambiguity in the text. This document addresses
-      concerns related to DoS attacks on hosts as specified in
-      <xref target="I-D.ietf-6man-eh-limits"/>, although new limits on the
-      number of Hop-by-Hop and Destination Options could be specified in
-      <xref target="I-D.ietf-6man-rfc8504-bis"/> (i.e., smaller than 8).</t>
+      <t>Although RFC 8200 recommends that senders follow a specific order of
+      appearance and limit the occurrences of Extension Headers, receivers
+      cannot assume that these recommendations have been followed. As a result,
+      they may be exposed to denial-of-service attacks, where Extension Headers
+      are used as the attack vector.</t>
+
+      <t>This document specifies behavior that allows an IPv6 destination node,
+      namely a host (i.e., the final destination of an IPv6 packet) or an
+      intermediate destination node addressed by an entry in a Routing header
+      list other than the final one, to enforce strict ordering and limits on
+      the occurrence of Extension Headers. The specification applies only to
+      IPv6 destination nodes and does not impose requirements on routers
+      forwarding IPv6 packets not explicitly addressed to themselves.</t>
     </section>
 
     <section title="Conventions">
@@ -81,61 +92,57 @@
       when, they appear in all capitals, as shown here.</t>
     </section>
 
-    <section title="Update to the number of occurrences of Extension Headers">
-      <t>The following text replaces paragraph 2 of <xref target="RFC8200"/>
-      Section 4.1.</t>
+    <section title="Enforcement of IPv6 Extension Headers Ordering and Occurrence">
+      <t>An IPv6 destination, i.e., a host or an intermediate destination node,
+      MAY enforce the recommended ordering and limits on the occurrence of
+      Extension Headers described in Section 4.1 of <xref target="RFC8200"/>.
+      Per the ordering recommendations, each Extension Header can occur at most
+      once in a packet, with the exception of the Destination Options header
+      which can occur twice. The recommended Extension Headers ordering per
+      <xref target="RFC8200"/> is:
+        <list style="numbers">
+          <t>IPv6 header</t>
+          <t>Hop-by-Hop Options header</t>
+          <t>Destination Options header</t>
+          <t>Routing header</t>
+          <t>Fragment header</t>
+          <t>Authentication header</t>
+          <t>Encapsulating Security Payload header</t>
+          <t>Destination Options header</t>
+          <t>Upper-Layer header</t>
+        </list>
+      </t>
 
-      <t>OLD (RFC 8200):</t>
-      <blockquote>
-        <t>Each extension header should occur at most once, except for the
-        Destination Options header, which should occur at most twice (once
-        before a Routing header and once before the upper-layer header).</t>
-      </blockquote>
+      <t>If a host or an intermediate destination node enforces the recommended
+      ordering and a packet is received with out-of-order Extension Headers, or
+      the occurrence of an Extension Header is greater than one (or two for the
+      Destination Options header), then the receiving node MUST discard the
+      packet. In the case of a host, it MAY send an ICMP Parameter Problem
+      message with code 1 (Unrecognized Next Header type encountered)
+      <xref target="RFC4443"/> to the packet's source address. In the case of an
+      intermediate destination node, it MAY send an ICMP Parameter Problem
+      message with code 5 (Unrecognized Next Header type encountered by
+      intermediate node) <xref target="RFC8883"/> to the packet's source
+      address.</t>
+    </section>
 
-      <t>NEW:</t>
-      <blockquote>
-        <t>Each extension header SHOULD occur at most once, except for the
-        Destination Options header, which SHOULD occur at most twice (once
-        before a Routing header and once before the upper-layer header).</t>
-      </blockquote>
-
-      <t>[RFC Editor: please remove this note] An alternative would be to keep
-      the above text as is, without normative language.</t>
-
-      <t>The following text replaces paragraph 5 of <xref target="RFC8200"/>
-      Section 4.1.</t>
-
-      <t>OLD (RFC 8200):</t>
-      <blockquote>
-        <t>IPv6 nodes must accept and attempt to process extension headers in
-        any order and occurring any number of times in the same packet,
-        except for the Hop-by-Hop Options header, which is restricted to
-        appear immediately after an IPv6 header only.  Nonetheless, it is
-        strongly advised that sources of IPv6 packets adhere to the above
-        recommended order until and unless subsequent specifications revise
-        that recommendation.</t>
-      </blockquote>
-
-      <t>NEW:</t>
-      <blockquote>
-        <t>IPv6 nodes must accept and attempt to process extension headers in
-        any order in the same packet, except for the Hop-by-Hop Options header,
-        which is restricted to appear immediately after an IPv6 header only.
-        Nonetheless, it is strongly advised that sources of IPv6 packets adhere
-        to the above recommended order until and unless subsequent
-        specifications revise that recommendation. IPv6 nodes MAY discard a
-        packet exceeding the number of occurrences of extension headers.</t>
-      </blockquote>
-
-      <t>[RFC Editor: please remove this note] "SHOULD" or even "MUST" would
-      obviously be better, but "MAY" seems to be the only backward compatible
-      solution.</t>
+    <section title="Operational Considerations">
+      <t>Enforcing strict ordering and occurrence limits may cause packets whose
+      Extension Headers do not follow the recommended order or appear more than
+      suggested to be discarded. While such packets are not formally
+      non-compliant with RFC 8200, they are unexpected and may lead to parsing
+      ambiguities or interoperability issues. Operators should consider the
+      potential impact on traffic when enabling enforcement at destination
+      nodes, particularly at intermediate destination nodes.</t>
     </section>
 
     <section title="Security Considerations">
-      <t>This document does not introduce new security considerations. On the
-      contrary, the change proposed in this document mitigates possible DoS
-      attacks based on an abusive use of Extension Headers in IPv6 packets.</t>
+      <t>This document mitigates a potential denial-of-service attack based on
+      abusive use of Extension Headers in IPv6 packets. Hosts and intermediate
+      destination nodes are now allowed to enforce strict ordering and limits on
+      the occurrence of Extension Headers to reduce the attack vector.</t>
+
+      <t>This document does not introduce any new security concerns.</t>
     </section>
 
     <section title="IANA Considerations">
@@ -150,13 +157,10 @@
   <back>
     <references title="Normative References">
       &RFC2119;
+      &RFC4443;
       &RFC8174;
       &RFC8200;
-    </references>
-
-    <references title="Informative References">
-      &I-D.ietf-6man-eh-limits;
-      &I-D.ietf-6man-rfc8504-bis;
+      &RFC8883;
     </references>
   </back>
 </rfc>
