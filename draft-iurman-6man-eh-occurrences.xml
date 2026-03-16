@@ -44,7 +44,7 @@
       </address>
     </author>
 
-    <date day="28" month="February" year="2026"/>
+    <date day="16" month="March" year="2026"/>
 
     <abstract>
       <t>Operational experience has demonstrated that permitting multiple
@@ -130,7 +130,7 @@
       <t>Enforcing strict ordering and occurrence limits may cause packets whose
       Extension Headers do not follow the recommended order or appear more than
       suggested to be discarded. While such packets are not formally
-      non-compliant with RFC 8200, they are unexpected and may lead to parsing
+      non-compliant with RFC 8200, they are unexpected and may lead to parsing
       ambiguities or interoperability issues. Operators should consider the
       potential impact on traffic when enabling enforcement at destination
       nodes, particularly at intermediate destination nodes.</t>

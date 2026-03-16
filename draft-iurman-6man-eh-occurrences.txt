@@ -5,8 +5,8 @@
 Network Working Group                                          J. Iurman
 Internet-Draft                                       University of Liege
 Intended status: Standards Track                              T. Herbert
-Expires: 1 September 2026                                         XDPnet
-                                                        28 February 2026
+Expires: 17 September 2026                                        XDPnet
+                                                           16 March 2026
 
 
     Enforcement of IPv6 Extension Headers Ordering and Occurrence at
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 September 2026.
+   This Internet-Draft will expire on 17 September 2026.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Iurman & Herbert        Expires 1 September 2026                [Page 1]
+Iurman & Herbert        Expires 17 September 2026               [Page 1]
 
-Internet-Draft    IPv6 EH Enforcement for Destinations     February 2026
+Internet-Draft    IPv6 EH Enforcement for Destinations        March 2026
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Iurman & Herbert        Expires 1 September 2026                [Page 2]
+Iurman & Herbert        Expires 17 September 2026               [Page 2]
 
-Internet-Draft    IPv6 EH Enforcement for Destinations     February 2026
+Internet-Draft    IPv6 EH Enforcement for Destinations        March 2026
 
 
 2.  Conventions
@@ -165,9 +165,9 @@ Internet-Draft    IPv6 EH Enforcement for Destinations     February 2026
 
 
 
-Iurman & Herbert        Expires 1 September 2026                [Page 3]
+Iurman & Herbert        Expires 17 September 2026               [Page 3]
 
-Internet-Draft    IPv6 EH Enforcement for Destinations     February 2026
+Internet-Draft    IPv6 EH Enforcement for Destinations        March 2026
 
 
 4.  Operational Considerations
@@ -175,11 +175,11 @@ Internet-Draft    IPv6 EH Enforcement for Destinations     February 2026
    Enforcing strict ordering and occurrence limits may cause packets
    whose Extension Headers do not follow the recommended order or appear
    more than suggested to be discarded.  While such packets are not
-   formally non-compliant with RFC&#8239;8200, they are unexpected and
-   may lead to parsing ambiguities or interoperability issues.
-   Operators should consider the potential impact on traffic when
-   enabling enforcement at destination nodes, particularly at
-   intermediate destination nodes.
+   formally non-compliant with RFC 8200, they are unexpected and may
+   lead to parsing ambiguities or interoperability issues.  Operators
+   should consider the potential impact on traffic when enabling
+   enforcement at destination nodes, particularly at intermediate
+   destination nodes.
 
 5.  Security Considerations
 
@@ -221,9 +221,9 @@ Internet-Draft    IPv6 EH Enforcement for Destinations     February 2026
 
 
 
-Iurman & Herbert        Expires 1 September 2026                [Page 4]
+Iurman & Herbert        Expires 17 September 2026               [Page 4]
 
-Internet-Draft    IPv6 EH Enforcement for Destinations     February 2026
+Internet-Draft    IPv6 EH Enforcement for Destinations        March 2026
 
 
    [RFC8200]  Deering, S. and R. Hinden, "Internet Protocol, Version 6
@@ -277,4 +277,4 @@ Authors' Addresses
 
 
 
-Iurman & Herbert        Expires 1 September 2026                [Page 5]
+Iurman & Herbert        Expires 17 September 2026               [Page 5]
