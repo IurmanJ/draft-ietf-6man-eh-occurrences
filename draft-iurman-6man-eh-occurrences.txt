@@ -4,14 +4,14 @@
 
 Network Working Group                                          J. Iurman
 Internet-Draft                                       University of Liege
-Intended status: Standards Track                              T. Herbert
-Expires: 17 September 2026                                        XDPnet
-                                                           16 March 2026
+Updates: 8200 (if approved)                                   T. Herbert
+Intended status: Standards Track                                  XDPnet
+Expires: 16 October 2026                                   14 April 2026
 
 
     Enforcement of IPv6 Extension Headers Ordering and Occurrence at
                            Destination Nodes
-                  draft-iurman-6man-eh-occurrences-01
+                  draft-iurman-6man-eh-occurrences-02
 
 Abstract
 
@@ -21,7 +21,7 @@ Abstract
    security risks.  Although RFC 8200 recommends that senders follow a
    specific order of appearance and limit the occurrences of Extension
    Headers, receivers cannot assume that these recommendations have been
-   followed.  This document specifies behavior that allows an IPv6
+   followed.  This document updates RFC 8200 by allowing an IPv6
    destination node, namely a host (i.e., the final destination of an
    IPv6 packet) or an intermediate destination node addressed by an
    entry in a Routing header list other than the final one, to enforce
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 September 2026.
+   This Internet-Draft will expire on 16 October 2026.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Iurman & Herbert        Expires 17 September 2026               [Page 1]
+Iurman & Herbert         Expires 16 October 2026                [Page 1]
 
-Internet-Draft    IPv6 EH Enforcement for Destinations        March 2026
+Internet-Draft    IPv6 EH Enforcement for Destinations        April 2026
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -89,19 +89,19 @@ Table of Contents
    header and the Destination Options header, which may each carry
    multiple options.
 
-   Although RFC 8200 recommends that senders follow a specific order of
+   Although [RFC8200] recommends that senders follow a specific order of
    appearance and limit the occurrences of Extension Headers, receivers
    cannot assume that these recommendations have been followed.  As a
    result, they may be exposed to denial-of-service attacks, where
    Extension Headers are used as the attack vector.
 
-   This document specifies behavior that allows an IPv6 destination
-   node, namely a host (i.e., the final destination of an IPv6 packet)
-   or an intermediate destination node addressed by an entry in a
-   Routing header list other than the final one, to enforce strict
-   ordering and limits on the occurrence of Extension Headers.  The
-   specification applies only to IPv6 destination nodes and does not
-   impose requirements on routers forwarding IPv6 packets not explicitly
+   This document updates [RFC8200] by allowing an IPv6 destination node,
+   namely a host (i.e., the final destination of an IPv6 packet) or an
+   intermediate destination node addressed by an entry in a Routing
+   header list other than the final one, to enforce strict ordering and
+   limits on the occurrence of Extension Headers.  The specification
+   applies only to IPv6 destination nodes and does not impose
+   requirements on routers forwarding IPv6 packets not explicitly
    addressed to themselves.
 
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Iurman & Herbert        Expires 17 September 2026               [Page 2]
+Iurman & Herbert         Expires 16 October 2026                [Page 2]
 
-Internet-Draft    IPv6 EH Enforcement for Destinations        March 2026
+Internet-Draft    IPv6 EH Enforcement for Destinations        April 2026
 
 
 2.  Conventions
@@ -165,9 +165,9 @@ Internet-Draft    IPv6 EH Enforcement for Destinations        March 2026
 
 
 
-Iurman & Herbert        Expires 17 September 2026               [Page 3]
+Iurman & Herbert         Expires 16 October 2026                [Page 3]
 
-Internet-Draft    IPv6 EH Enforcement for Destinations        March 2026
+Internet-Draft    IPv6 EH Enforcement for Destinations        April 2026
 
 
 4.  Operational Considerations
@@ -175,7 +175,7 @@ Internet-Draft    IPv6 EH Enforcement for Destinations        March 2026
    Enforcing strict ordering and occurrence limits may cause packets
    whose Extension Headers do not follow the recommended order or appear
    more than suggested to be discarded.  While such packets are not
-   formally non-compliant with RFC 8200, they are unexpected and may
+   formally non-compliant with [RFC8200], they are unexpected and may
    lead to parsing ambiguities or interoperability issues.  Operators
    should consider the potential impact on traffic when enabling
    enforcement at destination nodes, particularly at intermediate
@@ -221,9 +221,9 @@ Internet-Draft    IPv6 EH Enforcement for Destinations        March 2026
 
 
 
-Iurman & Herbert        Expires 17 September 2026               [Page 4]
+Iurman & Herbert         Expires 16 October 2026                [Page 4]
 
-Internet-Draft    IPv6 EH Enforcement for Destinations        March 2026
+Internet-Draft    IPv6 EH Enforcement for Destinations        April 2026
 
 
    [RFC8200]  Deering, S. and R. Hinden, "Internet Protocol, Version 6
@@ -277,4 +277,4 @@ Authors' Addresses
 
 
 
-Iurman & Herbert        Expires 17 September 2026               [Page 5]
+Iurman & Herbert         Expires 16 October 2026                [Page 5]

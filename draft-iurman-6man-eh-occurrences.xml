@@ -14,7 +14,7 @@
 <?rfc sortrefs="yes" ?>
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
-<rfc category="std" docName="draft-iurman-6man-eh-occurrences-01"
+<rfc category="std" docName="draft-iurman-6man-eh-occurrences-02" updates="8200"
      ipr="trust200902" submissionType="IETF" consensus="true">
   <front>
     <title abbrev="IPv6 EH Enforcement for Destinations">Enforcement of IPv6
@@ -44,7 +44,7 @@
       </address>
     </author>
 
-    <date day="16" month="March" year="2026"/>
+    <date day="14" month="April" year="2026"/>
 
     <abstract>
       <t>Operational experience has demonstrated that permitting multiple
@@ -53,7 +53,7 @@
       risks. Although RFC 8200 recommends that senders follow a specific order
       of appearance and limit the occurrences of Extension Headers, receivers
       cannot assume that these recommendations have been followed. This document
-      specifies behavior that allows an IPv6 destination node, namely a host
+      updates RFC 8200 by allowing an IPv6 destination node, namely a host
       (i.e., the final destination of an IPv6 packet) or an intermediate
       destination node addressed by an entry in a Routing header list other than
       the final one, to enforce strict ordering and limits on the occurrence of
@@ -69,13 +69,15 @@
       risks. This is particularly true for the Hop-by-Hop Options header and the
       Destination Options header, which may each carry multiple options.</t>
 
-      <t>Although RFC 8200 recommends that senders follow a specific order of
+      <t>Although <xref target="RFC8200"/> recommends that senders follow a
+      specific order of
       appearance and limit the occurrences of Extension Headers, receivers
       cannot assume that these recommendations have been followed. As a result,
       they may be exposed to denial-of-service attacks, where Extension Headers
       are used as the attack vector.</t>
 
-      <t>This document specifies behavior that allows an IPv6 destination node,
+      <t>This document updates <xref target="RFC8200"/> by allowing an IPv6
+      destination node,
       namely a host (i.e., the final destination of an IPv6 packet) or an
       intermediate destination node addressed by an entry in a Routing header
       list other than the final one, to enforce strict ordering and limits on
@@ -130,7 +132,8 @@
       <t>Enforcing strict ordering and occurrence limits may cause packets whose
       Extension Headers do not follow the recommended order or appear more than
       suggested to be discarded. While such packets are not formally
-      non-compliant with RFC 8200, they are unexpected and may lead to parsing
+      non-compliant with <xref target="RFC8200"/>, they are unexpected and may
+      lead to parsing
       ambiguities or interoperability issues. Operators should consider the
       potential impact on traffic when enabling enforcement at destination
       nodes, particularly at intermediate destination nodes.</t>
