@@ -1,4 +1,4 @@
-DRAFT := draft-iurman-6man-eh-occurrences
+DRAFT := draft-ietf-6man-eh-occurrences
 
 .PHONY: all clean
 
